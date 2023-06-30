@@ -1,1 +1,76 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* font-size: 10px; */
+  font-size: 62.5%;
+}
+body {
+  /*height: 100vh;*/
+  height: 100%;
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+/*app-root {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  height: 100%;*/
+/*}*/
+
+/*app-project-list {*/
+/*  height: 100%;*/
+/*}*/
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-gap {
+  gap: 6.0rem;
+}
+
+.grid {
+  display: grid;
+  column-gap: 1.5rem;
+}
+
+.grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--5-cols {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.full-height {
+  height: 100%;
+}
+
+.title-content {
+  font-size: 1.8rem;
+  display: inline-block;
+  margin-top: 2.0rem;
+  padding-bottom: 1.0rem;
+  border-bottom: 1px solid #d7d0d0;
+}
+
+.container-content {
+  grid-column: 2/ 4;
+}
+
+
+

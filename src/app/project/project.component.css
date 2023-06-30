@@ -1,0 +1,66 @@
+.container-project-content {
+  grid-column: 2 /4 ;
+  width: 90rem;
+}
+
+.gap {
+  gap: 3.8rem;
+}
+
+.grid-cont-1 {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  row-gap: 3.8rem;
+  column-gap: 3.8rem;
+}
+
+.grid-cont-2 {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: 3.8rem;
+}
+
+mat-form-field {
+  /*height: 30rem;*/
+}
+
+.flex-cont-nested {
+  display: flex;
+  align-items: center;
+}
+
+.input-project-number, .select-group,
+.select-status, .start-date-picker, .end-date-picker {
+  width: 26rem;
+}
+
+.end-date {
+  margin-right: 4.0rem;
+}
+.end-date-form {
+  margin-left: auto;
+}
+
+mat-label {
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 11rem;
+  height: 3.0rem;
+  color: #666666;
+}
+
+button.btn-cancel {
+  color: black;
+  background: #b9b9b9;
+  height: 3.5rem;
+  grid-column: 3 / 4;
+}
+
+button.btn-create-edit {
+  color: white;
+  background: #2f85fa;
+  height: 3.5rem;
+  grid-column: 4 / 5;
+}

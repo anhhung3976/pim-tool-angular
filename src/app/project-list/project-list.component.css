@@ -1,0 +1,85 @@
+.project, .customer, .supplier {
+  font-size: 1.4rem;
+}
+
+.flex-btn {
+  display: flex;
+  gap: 5.0rem;
+  margin-top: 2.0rem;
+}
+
+#input-field {
+  width: 50rem;
+  padding: 0 1.5rem;
+}
+
+.select-status {
+  width: 20rem;
+}
+
+a[mat-button] {
+  color: cornflowerblue;
+}
+
+button[mat-raised-button].btn-search  {
+  background: #0071CD;
+}
+
+.cont-project-list {
+  margin-top: 3.8rem;
+  width: 140rem;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px solid #b9b9b9;
+}
+
+tr[mat-row] {
+  border-left: 1px solid #b9b9b9;
+}
+
+tr[mat-row]:last-child {
+  border-bottom: 1px solid #b9b9b9;
+}
+
+td {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #666666;
+}
+
+td[mat-cell] {
+  border-right: 1px solid #b9b9b9;
+  border-bottom: none;
+}
+
+td:first-child, td:last-child {
+  padding: 0;
+  text-align: center;
+}
+
+td:first-child, td:last-child {
+  width: 6.0rem;
+}
+
+td, th, .mat-mdc-paginator {
+  font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+
+mat-icon {
+  color: #D44E31;
+}
+
+mat-checkbox {
+  /*width: 1.5rem;*/
+  /*height: 1.5rem;*/
+}
+
+
+
+

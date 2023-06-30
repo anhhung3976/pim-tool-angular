@@ -1,0 +1,73 @@
+<div class="grid grid--3-cols">
+  <app-side-action></app-side-action>
+  <form class="container-project-content">
+    <div class="flex-column gap">
+      <p class="title-content">New Project</p>
+      <div class="flex-column gap">
+        <div class="grid-cont-1">
+          <mat-label>Project Number</mat-label>
+          <mat-form-field class="input-project-number">
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-label>Project Name</mat-label>
+          <mat-form-field>
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-label>Customer</mat-label>
+          <mat-form-field>
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-label>Group</mat-label>
+          <mat-form-field class="select-group">
+            <mat-select required>
+              <mat-option value="new">New</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-label>Members</mat-label>
+          <mat-form-field>
+            <input type="text" matInput>
+          </mat-form-field>
+
+          <mat-label>Status</mat-label>
+          <mat-form-field class="select-status">
+            <mat-select [formControl]="selected">
+              <mat-option value="new">New</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="grid-cont-2">
+          <mat-label class="start-date">Start date</mat-label>
+          <div class="flex-cont-nested">
+            <div class="start-date-form">
+              <mat-form-field class="start-date-picker">
+                <input matInput [matDatepicker]="pickerStart">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                <mat-datepicker #pickerStart></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="end-date-form">
+              <mat-label class="end-date">End date</mat-label>
+              <mat-form-field class="end-date-picker">
+                <input matInput [matDatepicker]="pickerEnd">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                <mat-datepicker #pickerEnd></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="grid grid--4-cols">
+        <button mat-raised-button class="btn-cancel">Cancel</button>
+        <button mat-raised-button class="btn-create-edit">Create Project</button>
+      </div>
+    </div>
+  </form>
+</div>
