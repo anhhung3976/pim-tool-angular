@@ -2,12 +2,13 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {ProjectService} from "../services/project.service";
-import { switchMap, map} from "rxjs";
+import {switchMap, map, tap} from "rxjs";
 import {Project} from "../model/project";
 import {StatusEnum} from "../../constant/project-constant";
 import {EnumUtils} from "../utils/EnumUtils";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProjectSearch} from "../model/project-search";
+import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
   selector: 'app-project-list',
@@ -17,11 +18,14 @@ import {ProjectSearch} from "../model/project-search";
 export class ProjectListComponent implements OnInit, AfterViewInit {
   recordTotal: number = 0;
   pageIndex: number = 0;
-  status = Object.values(StatusEnum)
+  pageSize: number = 5;
+  status = Object.values(StatusEnum);
+  selectedItems = new SelectionModel<Project>(true, []);
+
   projectSearchForm : FormGroup;
   EnumUtils = EnumUtils;
-
-  displayedColumns: string[] = ['position', 'number', 'name', 'status', 'customer', 'startDate', 'delete'];
+  StatusEnum = StatusEnum;
+  displayedColumns: string[] = ['select', 'number', 'name', 'status', 'customer', 'startDate', 'delete'];
   dataSource = new MatTableDataSource<Project>([]);
 
   @ViewChild(MatTable)
@@ -50,15 +54,16 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
       }),
       map((res) => {
         this.dataSource = new MatTableDataSource(res.data);
-        this.recordTotal = res.recordsTotal
+        this.recordTotal = res.recordsTotal;
+        this.selectedItems = new SelectionModel<Project>(true, []);
       })
     ).subscribe();
   }
 
   loadAllProject() {
-    const pageIndex = this.paginator?.pageIndex ?? 0;
-    const pageSize = this.paginator?.pageSize ?? 5;
-    this.projectService.getAllProjects(pageIndex, pageSize).pipe(
+    // const pageIndex = this.paginator?.pageIndex ?? 0;
+    // const pageSize = this.paginator?.pageSize ?? 5;
+    this.projectService.getAllProjects(this.pageIndex, this.pageSize).pipe(
       map(res => {
         this.dataSource = new MatTableDataSource(res.data)
         this.recordTotal = res.recordsTotal
@@ -86,21 +91,50 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
 
   onSubmitSearchForm() {
     const projectSearch : ProjectSearch = this.projectSearchForm.value;
-    const pageIndex = 0;
-    const pageSize = 5
-    this.projectService.searchProject(pageIndex, pageSize, projectSearch).pipe(
+    this.projectService.searchProject(this.pageIndex, this.pageSize, projectSearch).pipe(
       map(res => {
         this.dataSource = new MatTableDataSource(res.data);
         this.paginator.length  = this.recordTotal;
         this.paginator.pageIndex = 0
-        this.recordTotal = res.recordsTotal;
         this.pageIndex = 0;
+        this.recordTotal = res.recordsTotal;
       })
     ).subscribe();
   }
 
   onResetSearchForm() {
-    this.projectSearchForm.patchValue({input: "", projectStatus: EnumUtils.getKeyByValue(StatusEnum.NEW)})
+    this.pageIndex = 0;
+    this.projectSearchForm.reset({input: "", projectStatus: EnumUtils.getKeyByValue(StatusEnum.NEW)})
     this.onSubmitSearchForm();
   }
+
+  onProjectToggled(project : Project) {
+    this.selectedItems.toggle(project);
+  }
+
+  deleteItem(project : Project) {
+    this.projectService.deleteProjects([project.id]).pipe(
+      tap(() => {
+        this.selectedItems = new SelectionModel<Project>(true, []);
+        this.loadAllProject();
+      })
+    ).subscribe();
+
+  }
+
+  deleteItems() {
+    const projectsInvalid = this.selectedItems.selected.filter(project => project.status != EnumUtils.getKeyByValue(StatusEnum.NEW));
+    if (projectsInvalid.length > 0) {
+      alert("Can only delete the project with status new");
+    } else {
+      const ids = this.selectedItems.selected.map(project => project.id);
+      this.projectService.deleteProjects(ids).pipe(
+        tap(() => {
+          this.selectedItems = new SelectionModel<Project>(true, []);
+          this.loadAllProject();
+        })
+      ).subscribe();
+    }
+  }
+
 }

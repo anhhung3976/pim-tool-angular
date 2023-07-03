@@ -70,7 +70,6 @@ td, th, .mat-mdc-paginator {
   font-family: "Segoe UI", "Helvetica Neue", sans-serif;
 }
 
-
 mat-icon {
   color: #D44E31;
 }
@@ -78,6 +77,36 @@ mat-icon {
 mat-checkbox {
   /*width: 1.5rem;*/
   /*height: 1.5rem;*/
+}
+
+.footer-row {
+  border: 1px solid #b9b9b9;
+}
+
+.cont-flex-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cont-text {
+  margin-left: 0.5rem;
+}
+
+.text-selected, .text-deleted {
+  width: 14rem;
+  height: 2.0rem;
+  color: #2F85FA;
+}
+
+.cont-icon-and-text {
+  display: flex;
+  align-items: center;
+  margin-right: 1.3rem;
+}
+
+.text-deleted {
+  color: #D44E31;
 }
 
 

@@ -12,6 +12,6 @@ export class HeaderComponent {
   }
 
   backToProjectList() {
-    this.router.navigateByUrl("")
+    this.router.navigateByUrl("");
   }
 }

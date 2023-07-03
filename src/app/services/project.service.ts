@@ -1,11 +1,11 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
-
 import {shareReplay} from "rxjs/operators";
 import {API_URL} from "../../constant/project-constant";
 import {ProjectPaging} from "../model/project-paging";
 import {ProjectSearch} from "../model/project-search";
+import {MvcRes} from "../model/mvc-res";
 
 
 @Injectable({
@@ -38,5 +38,11 @@ export class ProjectService {
     }).pipe(
       shareReplay()
     );
+  }
+
+  deleteProjects(projectIds : number[]) : Observable<MvcRes> {
+    return this.http.delete<MvcRes>(`${API_URL}/delete-project`, {
+        body: projectIds
+    })
   }
 }

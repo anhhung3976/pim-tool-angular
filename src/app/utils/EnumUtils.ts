@@ -6,4 +6,10 @@ export class EnumUtils {
     const indexOfS = Object.values(StatusEnum).indexOf(value as unknown as StatusEnum);
     return Object.keys(StatusEnum)[indexOfS];
   }
+
+  static getValueByKey(key: string) {
+    // @ts-ignore
+    return StatusEnum[key];
+  }
+
 }
