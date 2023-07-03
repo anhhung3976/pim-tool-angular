@@ -17,12 +17,12 @@
   width: 20rem;
 }
 
-a[mat-button] {
-  color: cornflowerblue;
-}
-
 button[mat-raised-button].btn-search  {
   background: #0071CD;
+}
+
+button.btn-reset {
+  color: #0071CD;
 }
 
 .cont-project-list {
