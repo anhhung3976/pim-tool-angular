@@ -73,4 +73,19 @@ body {
 }
 
 
+/* project component css */
+.project-number-form .mdc-text-field,
+.project-name-form .mdc-text-field,
+.customer-form .mdc-text-field,
+.select-group-form .mdc-text-field,
+.member-form .mdc-text-field,
+.select-status-form .mdc-text-field,
+.start-date-form .mdc-text-field,
+.end-date-form .mdc-text-field {
+  background: white;
+  border: 1px solid #b9b9b9;
+}
+
+
+
 

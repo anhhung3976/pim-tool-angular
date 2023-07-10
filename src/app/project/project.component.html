@@ -1,73 +1,192 @@
 <div class="grid grid--3-cols">
   <app-side-action></app-side-action>
-  <form class="container-project-content">
-    <div class="flex-column gap">
-      <p class="title-content">New Project</p>
+  <form [formGroup]="formGroup" class="container-project-content">
+    <ng-template [ngIf]="isNewPage" [ngIfElse]="editPage">
       <div class="flex-column gap">
-        <div class="grid-cont-1">
-          <mat-label>Project Number</mat-label>
-          <mat-form-field class="input-project-number">
-            <input type="text" matInput>
-          </mat-form-field>
-
-          <mat-label>Project Name</mat-label>
-          <mat-form-field>
-            <input type="text" matInput>
-          </mat-form-field>
-
-          <mat-label>Customer</mat-label>
-          <mat-form-field>
-            <input type="text" matInput>
-          </mat-form-field>
-
-          <mat-label>Group</mat-label>
-          <mat-form-field class="select-group">
-            <mat-select required>
-              <mat-option value="new">New</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-label>Members</mat-label>
-          <mat-form-field>
-            <input type="text" matInput>
-          </mat-form-field>
-
-          <mat-label>Status</mat-label>
-          <mat-form-field class="select-status">
-            <mat-select [formControl]="selected">
-              <mat-option value="new">New</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div class="flex-column">
+          <p class="title-content">{{ titlePage }}</p>
+          <div class="cont-error" [ngClass]="isFormValid ? 'hide' : ''">
+            <p class="error-text">Please enter all the mandatory fields (*)</p>
+            <button mat-button class="btn-close-error" (click)="closeError()">X</button>
+          </div>
         </div>
+        <div class="flex-column gap">
+          <div class="grid-cont-1">
+            <mat-label class="project-number-label">Project Number</mat-label>
+            <mat-form-field class="project-number-form">
+              <input formControlName="projectNumber" type="text" matInput class="project-number-input">
+              <mat-error *ngIf="formGroup.controls['projectNumber'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
 
-        <div class="grid-cont-2">
-          <mat-label class="start-date">Start date</mat-label>
-          <div class="flex-cont-nested">
-            <div class="start-date-form">
-              <mat-form-field class="start-date-picker">
-                <input matInput [matDatepicker]="pickerStart">
-                <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
-                <mat-datepicker #pickerStart></mat-datepicker>
-              </mat-form-field>
-            </div>
+            <mat-label class="project-name-label">Project Name</mat-label>
+            <mat-form-field class="project-name-form">
+              <input formControlName="projectName" type="text" matInput>
+              <mat-error *ngIf="formGroup.controls['projectName'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
 
-            <div class="end-date-form">
-              <mat-label class="end-date">End date</mat-label>
-              <mat-form-field class="end-date-picker">
-                <input matInput [matDatepicker]="pickerEnd">
-                <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-                <mat-datepicker #pickerEnd></mat-datepicker>
-              </mat-form-field>
-            </div>
+            <mat-label class="customer-label">Customer</mat-label>
+            <mat-form-field class="customer-form">
+              <input formControlName="customerName" type="text" matInput>
+              <mat-error *ngIf="formGroup.controls['customerName'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="group-label">Group</mat-label>
+            <mat-form-field class="select-group-form" *ngIf="infoRes$ | async as infoRes">
+              <mat-select formControlName="groupId">
+                <mat-option *ngFor="let idGroup of infoRes.groupIdList" [value]="idGroup">{{ idGroup }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-label class="members-label">Members</mat-label>
+            <mat-form-field class="member-form">
+              <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-label class="status-label">Status</mat-label>
+            <mat-form-field class="select-status-form">
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let s of status" [value]="EnumUtils.getKeyByValue(s)">{{ s }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formGroup.controls['status'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
           </div>
 
+          <div class="grid-cont-2">
+            <mat-label class="start-date-label">Start date</mat-label>
+            <div class="flex-cont-nested">
+              <div class="start-date-form">
+                <mat-form-field class="start-date-picker-form">
+                  <input formControlName="startDate" matInput [matDatepicker]="pickerStart">
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerStart></mat-datepicker>
+                  <mat-error *ngIf="formGroup.controls['startDate'].hasError('required')">
+                    Please enter all the mandatory fields (*)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="end-date-form">
+                <mat-label class="end-date-label">End date</mat-label>
+                <mat-form-field class="end-date-picker-form">
+                  <input matInput [matDatepicker]="pickerEnd">
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerEnd></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="grid grid--4-cols">
+          <button mat-raised-button class="btn-cancel" (click)="cancel()">Cancel</button>
+          <button type="submit" mat-raised-button class="btn-create-edit" (click)="createProject()">Create Project
+          </button>
         </div>
       </div>
-      <mat-divider></mat-divider>
-      <div class="grid grid--4-cols">
-        <button mat-raised-button class="btn-cancel">Cancel</button>
-        <button mat-raised-button class="btn-create-edit">Create Project</button>
+    </ng-template>
+
+    <ng-template #editPage>
+      <div class="flex-column gap">
+        <div class="flex-column">
+          <p class="title-content">{{ titlePage }}</p>
+          <div class="cont-error" [ngClass]="isFormValid ? 'hide' : ''">
+            <p class="error-text">Please enter all the mandatory fields (*)</p>
+            <button mat-button class="btn-close-error" (click)="closeError()">X</button>
+          </div>
+        </div>
+        <div class="flex-column gap">
+          <div class="grid-cont-1">
+            <mat-label class="project-number-label">Project Number</mat-label>
+            <mat-form-field class="project-number-form">
+              <input formControlName="projectNumber" type="text" matInput class="project-number-input">
+              <mat-error *ngIf="formGroup.controls['projectNumber'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="project-name-label">Project Name</mat-label>
+            <mat-form-field class="project-name-form">
+              <input formControlName="projectName" type="text" matInput>
+              <mat-error *ngIf="formGroup.controls['projectName'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="customer-label">Customer</mat-label>
+            <mat-form-field class="customer-form">
+              <input formControlName="customerName" type="text" matInput>
+              <mat-error *ngIf="formGroup.controls['customerName'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
+
+            <mat-label class="group-label">Group</mat-label>
+            <mat-form-field class="select-group-form" *ngIf="infoRes$ | async as infoRes">
+              <mat-select formControlName="groupId">
+                <mat-option *ngFor="let idGroup of infoRes.groupIdList" [value]="idGroup">{{ idGroup }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-label class="members-label">Members</mat-label>
+            <mat-form-field class="member-form">
+              <input type="text" matInput>
+            </mat-form-field>
+
+            <mat-label class="status-label">Status</mat-label>
+            <mat-form-field class="select-status-form">
+              <mat-select formControlName="status">
+                <mat-option *ngFor="let s of status" [value]="EnumUtils.getKeyByValue(s)">{{ s }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="formGroup.controls['status'].hasError('required')">
+                Please enter all the mandatory fields (*)
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="grid-cont-2">
+            <mat-label class="start-date-label">Start date</mat-label>
+            <div class="flex-cont-nested">
+              <div class="start-date-form">
+                <mat-form-field class="start-date-picker-form">
+                  <input formControlName="startDate" matInput [matDatepicker]="pickerStart">
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerStart></mat-datepicker>
+                  <mat-error *ngIf="formGroup.controls['startDate'].hasError('required')">
+                    Please enter all the mandatory fields (*)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="end-date-form">
+                <mat-label class="end-date-label">End date</mat-label>
+                <mat-form-field class="end-date-picker-form">
+                  <input matInput [matDatepicker]="pickerEnd">
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerEnd></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="grid grid--4-cols">
+          <button mat-raised-button class="btn-cancel" (click)="cancel()">Cancel</button>
+          <button type="submit" mat-raised-button class="btn-create-edit" (click)="editProject()"> {{ titlePage }}
+          </button>
+        </div>
       </div>
-    </div>
+    </ng-template>
+
+
   </form>
 </div>

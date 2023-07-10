@@ -7,8 +7,7 @@ export class EnumUtils {
     return Object.keys(StatusEnum)[indexOfS];
   }
 
-  static getValueByKey(key: string) {
-    // @ts-ignore
+  static getValueByKey(key: keyof typeof StatusEnum) {
     return StatusEnum[key];
   }
 

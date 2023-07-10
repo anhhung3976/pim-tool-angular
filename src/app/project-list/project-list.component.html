@@ -2,7 +2,7 @@
   <app-side-action></app-side-action>
   <div class="flex-column container-content">
     <p class="title-content">Project Lists</p>
-    <form [formGroup]="projectSearchForm"  (ngSubmit)="onSubmitSearchForm()"  class="flex-btn" >
+    <form [formGroup]="projectSearchForm" (ngSubmit)="onSubmitSearchForm(false)"  class="flex-btn" >
       <input
         formControlName="input"
         id="input-field"
@@ -14,7 +14,7 @@
         <option *ngFor="let s of status" [value]="EnumUtils.getKeyByValue(s)">{{ s }}</option>
       </select>
       <button type="submit" mat-raised-button color="primary" class="btn-search">Search Project</button>
-      <button mat-button class="btn-reset" (click)="onResetSearchForm()" >Reset Search</button>
+      <button mat-button class="btn-reset" (click)="onResetSearchForm(); $event.preventDefault()" >Reset Search</button>
     </form>
 
     <div class="cont-project-list">
@@ -30,7 +30,15 @@
         <!-- number Column -->
         <ng-container matColumnDef="number">
           <th mat-header-cell *matHeaderCellDef>Number</th>
-          <td mat-cell *matCellDef="let project"> {{project.projectNumber}} </td>
+          <td mat-cell *matCellDef="let project">
+            <a *ngIf="isSearchClicked$ | async; else noLinkProjectNumber"
+               [routerLink]="['edit-project', project.projectNumber]"
+               class="link-project-number">{{project.projectNumber}}</a>
+
+            <ng-template #noLinkProjectNumber>
+              <p>{{project.projectNumber}}</p>
+            </ng-template>
+          </td>
         </ng-container>
 
         <!-- name Column -->

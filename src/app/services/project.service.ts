@@ -3,10 +3,11 @@ import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {shareReplay} from "rxjs/operators";
 import {API_URL} from "../../constant/project-constant";
-import {ProjectPaging} from "../model/project-paging";
-import {ProjectSearch} from "../model/project-search";
+import {ProjectPagingRes} from "../model/project-paging-res";
+import {ProjectSearchReq} from "../model/project-search-req";
 import {MvcRes} from "../model/mvc-res";
-
+import {InfoRes} from "../model/info-res";
+import {ProjectActionReq} from "../model/project-action-req";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,8 @@ export class ProjectService {
   constructor(private http : HttpClient) {
 
   }
-  getAllProjects(pageIndex : number, pageSize : number) : Observable<ProjectPaging> {
-    return this.http.get<ProjectPaging>(`${API_URL}/get-data`, {
+  getAllProjects(pageIndex : number, pageSize : number) : Observable<ProjectPagingRes> {
+    return this.http.get<ProjectPagingRes>(`${API_URL}/get-data`, {
       params: {
         offset: pageIndex,
         limit: pageSize
@@ -27,8 +28,8 @@ export class ProjectService {
     );
   }
 
-  searchProject(pageIndex : number, pageSize : number, projectSearch : ProjectSearch): Observable<ProjectPaging> {
-    return this.http.get<ProjectPaging>(`${API_URL}/search`, {
+  searchProject(pageIndex : number, pageSize : number, projectSearch : ProjectSearchReq): Observable<ProjectPagingRes> {
+    return this.http.get<ProjectPagingRes>(`${API_URL}/search`, {
       params: {
         offset: pageIndex,
         limit: pageSize,
@@ -45,4 +46,35 @@ export class ProjectService {
         body: projectIds
     })
   }
+
+  getInfoRes(): Observable<InfoRes> {
+    return this.http.get<InfoRes>(`${API_URL}/get-group-status`, {
+      params: {
+        input: ''
+      }
+    }).pipe(
+      shareReplay()
+    );
+  }
+
+  getProject(projectNumber : number) : Observable<MvcRes> {
+    return this.http.get<MvcRes>(`${API_URL}/get-project/${projectNumber}`).pipe(
+      shareReplay()
+    )
+  }
+
+  createProject(projectCreateReq : ProjectActionReq) : Observable<MvcRes> {
+   return  this.http.post<MvcRes>(`${API_URL}/new-project`, projectCreateReq).pipe(
+      shareReplay()
+    )
+  }
+
+  editProject(projectEditReq: ProjectActionReq) : Observable<MvcRes> {
+    return this.http.post<MvcRes>(`${API_URL}/update-project/${projectEditReq.projectNumber}`, projectEditReq).pipe(
+      shareReplay()
+    )
+  }
+
+
+
 }

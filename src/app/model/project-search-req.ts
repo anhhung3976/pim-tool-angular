@@ -1,5 +1,5 @@
 
-export interface ProjectSearch {
+export interface ProjectSearchReq {
   input : string;
   projectStatus : string;
 }

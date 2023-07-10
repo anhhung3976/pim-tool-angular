@@ -1,6 +1,6 @@
 import {Project} from "./project";
 
-export interface ProjectPaging {
+export interface ProjectPagingRes {
   recordsTotal: number;
   recordsFiltered: number;
   data: Project[];

@@ -7,6 +7,31 @@
   gap: 3.8rem;
 }
 
+.cont-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #F2DEDF;
+  border-radius: 5px;
+  margin-top: 0.2rem;
+}
+
+.hide {
+  display: none;
+}
+
+.error-text {
+  color: #BD5E5D;
+  font-size: 2.0rem;
+  padding-left: 2.0rem;
+  font-weight: 600;
+}
+
+/*.btn-close-error {*/
+/*  color: red;*/
+/*}*/
+
+
 .grid-cont-1 {
   display: grid;
   grid-template-columns: 120px 1fr;
@@ -26,17 +51,29 @@ mat-form-field {
   /*height: 30rem;*/
 }
 
+.project-number-label::after,
+.project-name-label::after,
+.customer-label::after,
+.group-label::after,
+.status-label::after,
+.start-date-label::after
+{
+  color: red;
+  content: "*";
+  padding-left: 1.0rem;
+}
+
 .flex-cont-nested {
   display: flex;
   align-items: center;
 }
 
-.input-project-number, .select-group,
-.select-status, .start-date-picker, .end-date-picker {
-  width: 26rem;
+.project-number-form, .select-group-form,
+.select-status-form, .start-date-picker-form, .end-date-picker-form {
+  width: 28rem;
 }
 
-.end-date {
+.end-date-label {
   margin-right: 4.0rem;
 }
 .end-date-form {
@@ -46,7 +83,7 @@ mat-form-field {
 mat-label {
   font-size: 1.4rem;
   font-weight: 600;
-  width: 11rem;
+  width: 15rem;
   height: 3.0rem;
   color: #666666;
 }

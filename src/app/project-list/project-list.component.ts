@@ -2,12 +2,12 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatTable, MatTableDataSource} from "@angular/material/table";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {ProjectService} from "../services/project.service";
-import {switchMap, map, tap} from "rxjs";
+import {switchMap, map, tap, BehaviorSubject, Observable} from "rxjs";
 import {Project} from "../model/project";
 import {StatusEnum} from "../../constant/project-constant";
 import {EnumUtils} from "../utils/EnumUtils";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProjectSearch} from "../model/project-search";
+import {ProjectSearchReq} from "../model/project-search-req";
 import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
@@ -19,12 +19,18 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   recordTotal: number = 0;
   pageIndex: number = 0;
   pageSize: number = 5;
+
+  private subject = new BehaviorSubject<Boolean>(false);
+  isSearchClicked$ : Observable<Boolean> = this.subject.asObservable();
+
+  // isSearchClicked : boolean = false;
   status = Object.values(StatusEnum);
   selectedItems = new SelectionModel<Project>(true, []);
 
   projectSearchForm : FormGroup;
   EnumUtils = EnumUtils;
   StatusEnum = StatusEnum;
+
   displayedColumns: string[] = ['select', 'number', 'name', 'status', 'customer', 'startDate', 'delete'];
   dataSource = new MatTableDataSource<Project>([]);
 
@@ -72,40 +78,29 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
 
 
   pageChanged(event: PageEvent | any) {
-    const finalIndex = event.length / event.pageSize
-    if (event.pageIndex == 0) {
-      this.pageIndex = 0;
-      return;
-    }
-    if (event.pageIndex + 1 == finalIndex) {
-      this.pageIndex = event.length - event.pageSize;
-      return;
-    }
-    if (event.previousPageIndex > event.pageIndex) {
-      this.pageIndex -= 5;
-      return;
-    }
-    this.pageIndex += 5;
+    this.pageIndex = this.paginator.pageIndex;
     return;
   }
 
-  onSubmitSearchForm() {
-    const projectSearch : ProjectSearch = this.projectSearchForm.value;
-    this.projectService.searchProject(this.pageIndex, this.pageSize, projectSearch).pipe(
+  onSubmitSearchForm(isReset : boolean) {
+    const projectSearch : ProjectSearchReq = this.projectSearchForm.value;
+    this.projectService.searchProject(0, this.pageSize, projectSearch).pipe(
       map(res => {
         this.dataSource = new MatTableDataSource(res.data);
         this.paginator.length  = this.recordTotal;
         this.paginator.pageIndex = 0
         this.pageIndex = 0;
         this.recordTotal = res.recordsTotal;
+        this.subject.next(!isReset);
+        // this.isSearchClicked = !isReset;
       })
     ).subscribe();
   }
 
   onResetSearchForm() {
     this.pageIndex = 0;
-    this.projectSearchForm.reset({input: "", projectStatus: EnumUtils.getKeyByValue(StatusEnum.NEW)})
-    this.onSubmitSearchForm();
+    this.projectSearchForm.reset({input: "", projectStatus: EnumUtils.getKeyByValue(StatusEnum.NEW)});
+    this.onSubmitSearchForm(true);
   }
 
   onProjectToggled(project : Project) {

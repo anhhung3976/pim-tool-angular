@@ -105,6 +105,10 @@ mat-checkbox {
   margin-right: 1.3rem;
 }
 
+.link-project-number {
+  color: #2F85FA;
+}
+
 .text-deleted {
   color: #D44E31;
 }
