@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import './assets/css/media.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -10,6 +12,7 @@ html {
   /* font-size: 10px; */
   font-size: 62.5%;
 }
+
 body {
   /*height: 100vh;*/
   height: 100%;

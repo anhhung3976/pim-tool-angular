@@ -9,6 +9,7 @@ import {EnumUtils} from "../utils/EnumUtils";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProjectSearchReq} from "../model/project-search-req";
 import {SelectionModel} from "@angular/cdk/collections";
+import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-project-list',
@@ -40,7 +41,10 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  constructor(private projectService: ProjectService, private formBuilder : FormBuilder) {
+  isLarge: Boolean = false;
+
+  constructor(private projectService: ProjectService, private formBuilder : FormBuilder,
+              private responsive: BreakpointObserver) {
     this.projectSearchForm = this.formBuilder.group({
       input: ['', Validators.required],
       projectStatus: [EnumUtils.getKeyByValue(StatusEnum.NEW), Validators.required]
@@ -50,6 +54,23 @@ export class ProjectListComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadAllProject();
+    this.responsive.observe([
+      Breakpoints.XSmall,
+      Breakpoints.Small,
+      Breakpoints.Large,
+    ]).subscribe(result => {
+      const breakPoints = result.breakpoints;
+      if (breakPoints[Breakpoints.XSmall]) {
+        return;
+      }
+      if (breakPoints[Breakpoints.Small]) {
+        this.isLarge = true;
+        return;
+      }
+      if (breakPoints[Breakpoints.Large]) {
+        return;
+      }
+    })
   }
 
   ngAfterViewInit() {

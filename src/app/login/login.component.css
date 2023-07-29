@@ -1,0 +1,141 @@
+
+
+.padding-top-md {
+  padding-top: 7.0rem !important;
+}
+
+.margin-bottom-md {
+  margin-bottom: 5.0rem !important;
+}
+
+.full-width {
+  width: 100%;
+}
+
+main {
+  height: 100%;
+}
+
+.container {
+  max-width: 40rem;
+  /* padding: 1rem 3.2rem 0 3.2rem; */
+  margin: 0 auto;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.0rem;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  gap: 1.0rem;
+}
+
+
+.icon-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.0rem;
+}
+
+.lock-icon {
+  /*height: 3.0rem;*/
+  /*width: 3.0rem;*/
+
+  /*color: white;*/
+  /*background-color: rgba(156, 39, 176);*/
+  /*border-radius: 50%;*/
+  /*padding: 1.5rem 1.5rem;*/
+}
+
+.sign-in {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.container-form .email,
+.container-form .password {
+  width: 40rem;
+  height: 5rem;
+  border: 1px solid rgba(196, 196, 196);
+  border-radius: 5px;
+  padding: 1.2rem;
+  font-family: inherit;
+  color: inherit;
+}
+
+.container-form input:focus {
+  border: 1px solid rgba(25, 118, 210);
+  outline: 2px solid rgba(25, 118, 210);
+}
+
+.container-form button {
+  width: 40rem;
+  height: 4rem;
+  border-radius: 5px;
+  color: rgba(255, 241, 240);
+  border: none;
+  background-color: rgba(22, 106, 197);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-sign-in:hover {
+  background-color: rgba(21, 101, 192);
+}
+
+.check-box {
+  width: 2.0rem;
+  height: 2.0rem;
+}
+
+.remember-me{
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.flex-row-links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sign-up:link,
+.sign-up:visited,
+.forgot-password:link,
+.forgot-password:visited {
+  font-size: 1.5rem;
+  color: rgba(25, 118, 210);
+  border-bottom: 1.5px solid rgba(163, 200, 237);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.sign-up:active,
+.sign-up:hover,
+.forgot-password:active,
+.forgot-password:hover {
+  border-bottom: 1.5px solid rgba(25, 118, 210);
+}
+
+.copyright {
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgba(102, 102, 151);
+}
+
+.your-website {
+  color: rgba(102, 102, 151);
+
+}

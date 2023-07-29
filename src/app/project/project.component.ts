@@ -32,8 +32,16 @@ export class ProjectComponent implements OnInit {
     const path = this.route.snapshot.url[0].path;
     this.infoRes$ = this.projectService.getInfoRes().pipe(
       map(res =>  {
+        const currentFormValue = this.formGroup.value;
         //TODO
-        this.formGroup.patchValue({groupId: res.groupIdList[0]})
+        let temp = res.groupIdList.find(id => id == currentFormValue.groupId);
+        let groupId;
+        if (temp != undefined) {
+          groupId = temp;
+        } else {
+          groupId = res.groupIdList[0];
+        }
+        this.formGroup.patchValue({groupId: groupId})
         return res;
       })
     );

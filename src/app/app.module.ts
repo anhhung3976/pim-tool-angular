@@ -16,12 +16,13 @@ import {MatIconModule} from "@angular/material/icon";
 import {AppRoutingModule} from "./app-routing.module";
 import { ProjectComponent } from './project/project.component';
 import { SideActionComponent } from './side-action/side-action.component';
-import {MatInput, MatInputModule} from "@angular/material/input";
+import {MatInputModule} from "@angular/material/input";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {HttpClientModule} from "@angular/common/http";
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {HttpClientModule} from "@angular/common/http";
     HeaderComponent,
     ProjectListComponent,
     ProjectComponent,
-    SideActionComponent
+    SideActionComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
